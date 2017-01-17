@@ -56,7 +56,7 @@ updateStable() {
 }
 
 updateRC() {
-  version=0.19.0
+  version=`curl --fail https://yarnpkg.com/latest-rc-version`
   echo "==== Latest RC version is $version ===="
 
   updateDebian $version yarn-rc rc latest-rc.deb
