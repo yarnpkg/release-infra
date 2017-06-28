@@ -15,8 +15,8 @@ Available endpoints on `nightly.yarnpkg.com`:
 * `/release_circleci`: Similar to `release_appveyor`, except for CircleCI builds. Called a webhook from the CircleCI build
 * `/sign_releases`: GPG signs all `.tar.gz` and `.js` files for all GitHub releases, attaching the signatures as `.asc` files to the GitHub releases
 
-Files in this repo:
-* `nginx.conf`: Nginx configuration for `nightly.yarnpkg.com`
-* `api`: Contains publicly accessible endpoints for `nightly.yarnpkg.com`
-* `lib`: Contains libraries used by the release site  
+Directories in this repo:
+* `nginx`: Nginx configuration for `nightly.yarnpkg.com` and `yarn.fyi`
+* `api`: Publicly accessible endpoints for `nightly.yarnpkg.com`
+* `lib`: Libraries used by the release site  
   * `config.php`: Contains all configuration for the release infra. Includes API tokens (AppVeyor, CircleCI, GitHub), GPG IDs to use when signing files, and path to the Authenticode key for signing the Windows installer.
