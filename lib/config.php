@@ -19,6 +19,17 @@ class Config {
   const SIGN_FILE_TYPES = '/\.(tar\.gz|js)$/';
 
   const GITHUB_TOKEN = 'CHANGEME';
+  const GITHUB_AUTH_CLIENT_ID = 'CHANGEME';
+  const GITHUB_AUTH_CLIENT_SECRET = 'CHANGEME';
+
+  // GitHub usernames of people that are allowed to manage releases
+  const MANAGE_ALLOWED_USERS = [
+    'arcanis',
+    'bestander',
+    'daniel15',
+    'kittens',
+  ];
+
   const CIRCLECI_TOKEN = 'CHANGEME';
 
   const APPVEYOR_USERNAME = 'kittens';

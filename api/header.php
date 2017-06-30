@@ -2,7 +2,13 @@
 /**
  * Header for directory listings
  */
-$path = htmlspecialchars($_SERVER['REQUEST_URI']);
+if (empty($heading)) {
+  $title = 'Nightly Builds: '.$_SERVER['REQUEST_URI'];
+  $heading = 'Nightly Builds';
+} else {
+  $title = $heading;
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,7 +22,7 @@ $path = htmlspecialchars($_SERVER['REQUEST_URI']);
     <meta property="og:image" content="https://yarnpkg.com/assets/og_image.png" />
     <meta property="og:description" content="Fast, reliable, and secure dependency management." />
 
-    <title>Nightly Builds: <?= $path ?> | Yarn</title>
+    <title><?= htmlspecialchars($title) ?> | Yarn</title>
     <meta name="description" content="Fast, reliable, and secure dependency management.">
 
     <link rel="canonical" href="https://yarnpkg.com/en/docs/cli/">
@@ -154,7 +160,7 @@ $path = htmlspecialchars($_SERVER['REQUEST_URI']);
   <div class="container">
 
 
-      <h1 class="hero-text display-4">Nightly Builds</h1>
+      <h1 class="hero-text display-4"><?= htmlspecialchars($heading) ?></h1>
 
   </div>
 </div>
