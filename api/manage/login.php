@@ -8,8 +8,7 @@ use GuzzleHttp\Client;
 
 // Ensure state matches
 if (GitHubAuth::getState() !== $_GET['state']) {
-  echo 'Error: Invalid state';
-  die();
+  ErrorPage::render('Error: Invalid state');
 }
 
 $client = new Client();
@@ -27,13 +26,11 @@ $response = $client->post('https://github.com/login/oauth/access_token', [
 $response = json_decode((string)$response->getBody());
 
 if (!empty($response->error_description)) {
-  echo 'Error: '.htmlspecialchars($response->error_description);
-  die();
+  ErrorPage::render('Error: '.htmlspecialchars($response->error_description));
 }
 
 if (empty($response->access_token)) {
-  echo 'Error: No access token!';
-  die();
+  ErrorPage::render('Error: No access token!');
 }
 
 // Verify that the user is in our whitelist
@@ -45,8 +42,7 @@ $user = $client->get('https://api.github.com/user', [
 $user = json_decode((string)$user->getBody());
 
 if (!in_array(strtolower($user->login), Config::MANAGE_ALLOWED_USERS)) {
-  echo 'Sorry, "'.htmlspecialchars($user->login).'" is not allowed to access this page. Contact Daniel15 if you think you should be allowed here!';
-  die();
+  ErrorPage::render('Sorry, "'.htmlspecialchars($user->login).'" is not allowed to access this page. Contact Daniel15 if you think you should be allowed here!');
 }
 
 GitHubAuth::completeLogin($response->access_token, $user);
