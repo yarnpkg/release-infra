@@ -33,4 +33,4 @@ set_exception_handler(function($exception) {
 });
 
 // Set log file name based on name of script
-Analog::handler(__DIR__.'/../logs/'.basename($_SERVER['SCRIPT_NAME'], '.php').'.log');
+Analog::handler(Config::LOG_PATH.basename($_SERVER['SCRIPT_NAME'], '.php').'.log');

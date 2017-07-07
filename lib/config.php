@@ -41,6 +41,7 @@ class Config {
   const JENKINS_VERSION_TOKEN = 'CHANGEME';
 
   const ARTIFACT_PATH = __DIR__.'/../artifacts/';
+  const LOG_PATH = __DIR__.'/../logs/';
   const DEBIAN_INCOMING_PATH = __DIR__.'/../deb-incoming/';
 
   const GPG_NIGHTLY = 'FD2497F5';
