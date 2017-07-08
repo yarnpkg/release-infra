@@ -19,7 +19,7 @@ class GitHubAuth {
       return;
     }
 
-    $redirect_uri = 'https://'.$_SERVER['HTTP_HOST'].'/manage/login?'.http_build_query([
+    $redirect_uri = 'https://'.$_SERVER['HTTP_HOST'].'/login?'.http_build_query([
       'return' => $_SERVER['REQUEST_URI'],
     ], '', '&');
 

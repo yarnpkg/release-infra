@@ -10,7 +10,7 @@
  * the build information for realz.
  */
 
-require(__DIR__.'/../lib/api-core.php');
+require(__DIR__.'/../../lib/api-core.php');
 
 $build = CircleCI::getAndValidateBuildFromPayload();
 $urls = CircleCI::getArtifactsForBuild($build->build_num);

@@ -22,9 +22,9 @@ if (
 $file = file($path, FILE_IGNORE_NEW_LINES);
 
 $heading = 'Log: '.$_GET['file'];
-require(__DIR__.'/../header.php');
+require(__DIR__.'/../../nightly/public/header.php');
 ?>
-<p><a href="/manage/">&larr; Back</a></p>
+<p><a href="/">&larr; Back</a></p>
 <pre>
 <?php
 $lines = count($file);
@@ -35,4 +35,4 @@ if ($lines > MAX_LINES) {
 
 echo implode("\n", $file);
 echo '</pre>';
-require(__DIR__.'/../footer.php');
+require(__DIR__.'/../../nightly/public/footer.php');

@@ -4,7 +4,7 @@
  * to the GitHub release.
  */
 
-require(__DIR__.'/../lib/api-core.php');
+require(__DIR__.'/../../lib/api-core.php');
 set_time_limit(100);
 
 use GuzzleHttp\Promise;

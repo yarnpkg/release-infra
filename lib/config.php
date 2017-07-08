@@ -40,9 +40,9 @@ class Config {
   const JENKINS_VERSION_JOB = 'yarn-version';
   const JENKINS_VERSION_TOKEN = 'CHANGEME';
 
-  const ARTIFACT_PATH = __DIR__.'/../artifacts/';
+  const ARTIFACT_PATH = __DIR__.'/../nightly/artifacts/';
   const LOG_PATH = __DIR__.'/../logs/';
-  const DEBIAN_INCOMING_PATH = __DIR__.'/../deb-incoming/';
+  const DEBIAN_INCOMING_PATH = __DIR__.'/../nightly/deb-incoming/';
 
   const GPG_NIGHTLY = 'FD2497F5';
   const GPG_RELEASE = '9D41F3C3';

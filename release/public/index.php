@@ -5,7 +5,7 @@ require(__DIR__.'/../../vendor/autoload.php');
 GitHubAuth::enforce();
 
 $heading = 'Release Management';
-require(__DIR__.'/../header.php');
+require(__DIR__.'/../../nightly/public/header.php');
 ?>
 Hello World!
 
@@ -17,7 +17,7 @@ foreach ($dir as $file) {
   $name = basename($file->getFileName(), '.log');
   ?>
     <li>
-      <a href="/manage/log/<?= $name ?>"><?= $name ?></a>
+      <a href="/log/<?= $name ?>"><?= $name ?></a>
     </li>
   <?php
 }
@@ -25,4 +25,4 @@ foreach ($dir as $file) {
 </ul>
 <?php
 
-require(__DIR__.'/../footer.php');
+require(__DIR__.'/../../nightly/public/footer.php');

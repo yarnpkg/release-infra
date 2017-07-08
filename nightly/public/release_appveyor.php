@@ -4,7 +4,7 @@
  * deploys them to the GitHub release.
  */
 
-require(__DIR__.'/../lib/api-core.php');
+require(__DIR__.'/../../lib/api-core.php');
 
 use GuzzleHttp\Client;
 

@@ -3,7 +3,7 @@
  * Signs releases on GitHub.
  */
 
-require(__DIR__.'/../lib/api-core.php');
+require(__DIR__.'/../../lib/api-core.php');
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;

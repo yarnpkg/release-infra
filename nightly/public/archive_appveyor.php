@@ -4,7 +4,7 @@
  * file system.
  */
 
-require(__DIR__.'/../lib/api-core.php');
+require(__DIR__.'/../../lib/api-core.php');
 
 AppVeyor::validateWebhookAuth();
 
