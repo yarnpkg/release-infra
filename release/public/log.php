@@ -21,8 +21,7 @@ if (
 
 $file = file($path, FILE_IGNORE_NEW_LINES);
 
-$heading = 'Log: '.$_GET['file'];
-require(__DIR__.'/../../nightly/public/header.php');
+PageLayout::renderHeader('Log: '.$_GET['file']);
 ?>
 <p><a href="/">&larr; Back</a></p>
 <pre>
@@ -35,4 +34,4 @@ if ($lines > MAX_LINES) {
 
 echo implode("\n", $file);
 echo '</pre>';
-require(__DIR__.'/../../nightly/public/footer.php');
+PageLayout::renderFooter();

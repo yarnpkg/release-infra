@@ -4,8 +4,7 @@ require(__DIR__.'/../../vendor/autoload.php');
 
 GitHubAuth::enforce();
 
-$heading = 'Release Management';
-require(__DIR__.'/../../nightly/public/header.php');
+PageLayout::renderHeader('Release Management');
 ?>
 Hello World!
 
@@ -24,5 +23,4 @@ foreach ($dir as $file) {
 ?>
 </ul>
 <?php
-
-require(__DIR__.'/../../nightly/public/footer.php');
+PageLayout::renderFooter();
