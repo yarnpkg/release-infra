@@ -4,7 +4,7 @@
  * deploys them to the GitHub release.
  */
 
-require(__DIR__.'/../../lib/api-core.php');
+require(__DIR__.'/../bootstrap.php');
 
 use GuzzleHttp\Client;
 
@@ -12,12 +12,12 @@ AppVeyor::validateWebhookAuth();
 
 $payload = json_decode(file_get_contents('php://input'));
 if (empty($payload)) {
-  api_error('400', 'No payload provided');
+  ApiResponse::error('400', 'No payload provided');
 }
 
 // Ignore the Node.js 4.x build
 if ($payload->environmentVariables->node_version === '4') {
-  api_response(sprintf(
+  ApiResponse::sendAndLog(sprintf(
     '[#%s] Ignoring Node.js 4.x build',
     $payload->buildVersion
   ));
@@ -35,7 +35,7 @@ foreach ($build->build->jobs as $job) {
   }
 }
 if (!$is_valid_job) {
-  api_error('400', 'Invalid job ID: '.$job_id);
+  ApiResponse::error('400', 'Invalid job ID: '.$job_id);
 }
 
 // Get artifacts for this job, and just download the first one
@@ -51,7 +51,7 @@ $signed_tempfile = Authenticode::sign($tempfile);
 // Get version number from filename, and get the release with this version number
 preg_match('/yarn-(?P<version>.+?)(-unsigned)?\.msi/', $filename, $matches);
 if (empty($matches)) {
-  api_error('400', 'Unexpected filename: '.$filename);
+  ApiResponse::error('400', 'Unexpected filename: '.$filename);
 }
 $version = ltrim($matches['version'], 'v');
 $is_stable = Version::isStableVersionNumber($version);
@@ -65,4 +65,4 @@ $output =
   'Published '.$signed_filename.' to '.$version."\n".
   Release::performPostReleaseJobsIfReleaseIsComplete($version);
 
-api_response($output);
+ApiResponse::sendAndLog($output);

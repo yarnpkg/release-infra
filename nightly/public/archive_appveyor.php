@@ -4,13 +4,13 @@
  * file system.
  */
 
-require(__DIR__.'/../../lib/api-core.php');
+require(__DIR__.'/../bootstrap.php');
 
 AppVeyor::validateWebhookAuth();
 
 $payload = json_decode(file_get_contents('php://input'));
 if (empty($payload) || empty($payload->eventData)) {
-  api_error('400', 'No payload provided');
+  ApiResponse::error('400', 'No payload provided');
 }
 $build = AppVeyor::getAndValidateBuild($payload->eventData);
 

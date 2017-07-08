@@ -3,7 +3,7 @@
  * Returns the latest available version number.
  */
 
-require(__DIR__.'/../../lib/api-core.php');
+require(__DIR__.'/../bootstrap.php');
 
 $type = $_GET['type'] ?? 'tar';
 $latest = ArtifactManifest::load();

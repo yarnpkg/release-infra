@@ -3,7 +3,7 @@
  * Redirects to the latest artifact of a particular type
  */
 
-require(__DIR__.'/../../lib/api-core.php');
+require(__DIR__.'/../bootstrap.php');
 
 // Get file extension that was requested
 $extension = $_GET['ext'];

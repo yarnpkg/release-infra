@@ -3,7 +3,7 @@
  * Signs releases on GitHub.
  */
 
-require(__DIR__.'/../../lib/api-core.php');
+require(__DIR__.'/../bootstrap.php');
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
@@ -11,7 +11,7 @@ use GuzzleHttp\Promise;
 // Validate auth token
 $auth_token = $_GET['token'] ?? '';
 if (empty($auth_token) || $auth_token !== Config::SIGN_AUTH_TOKEN) {
-api_error('403', 'Unauthorized');
+ApiResponse::error('403', 'Unauthorized');
 }
 
 // Grab releases from GitHub
@@ -56,7 +56,7 @@ foreach ($releases as $release) {
 }
 
 if (count($files_to_sign) === 0) {
-  api_response('All releases have already been signed!');
+  ApiResponse::sendAndLog('All releases have already been signed!');
 }
 
 // Download all the artifacts to be signed in parallel
@@ -86,4 +86,4 @@ foreach ($files_to_sign as $file) {
 // Upload all the signature files in parallel
 $responses = Promise\unwrap($promises);
 
-api_response($output);
+ApiResponse::sendAndLog($output);

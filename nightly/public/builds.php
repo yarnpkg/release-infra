@@ -4,7 +4,7 @@
  */
 
 declare(strict_types=1);
-require(__DIR__.'/../../lib/api-core.php');
+require(__DIR__.'/../bootstrap.php');
 
 $type = $_GET['type'] ?? 'tar';
 $dir = new FileSystemIterator(Config::ARTIFACT_PATH);

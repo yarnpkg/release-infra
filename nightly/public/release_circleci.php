@@ -4,7 +4,7 @@
  * to the GitHub release.
  */
 
-require(__DIR__.'/../../lib/api-core.php');
+require(__DIR__.'/../bootstrap.php');
 set_time_limit(100);
 
 use GuzzleHttp\Promise;
@@ -12,7 +12,7 @@ use GuzzleHttp\Promise;
 $build = CircleCI::getAndValidateBuildFromPayload();
 // Only publish tagged releases
 if (!preg_match(Config::RELEASE_TAG_FORMAT, $build->vcs_tag)) {
-  api_response(sprintf(
+  ApiResponse::sendAndLog(sprintf(
     '[%s] Not publishing as release; this is not a release tag. branch=%s tag=%s',
     $build->build_num,
     $build->branch ?? '[none]',
@@ -45,4 +45,4 @@ $responses = Promise\unwrap($promises);
 
 $output .= "\n".Release::performPostReleaseJobsIfReleaseIsComplete($version);
 
-api_response($output);
+ApiResponse::sendAndLog($output);

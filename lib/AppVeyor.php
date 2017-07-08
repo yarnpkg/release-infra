@@ -10,7 +10,7 @@ class AppVeyor {
   public static function validateWebhookAuth() {
     $auth_token = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
     if (empty($auth_token) || $auth_token !== Config::APPVEYOR_WEBHOOK_AUTH_TOKEN) {
-      api_error('403', 'Unauthorized');
+      ApiResponse::error('403', 'Unauthorized');
     }
   }
 
@@ -20,10 +20,10 @@ class AppVeyor {
     static::validateBuild($build, $build);
     $build_version = $build->buildVersion;
     if (empty($build_version)) {
-      api_error('400', 'No build version found');
+      ApiResponse::error('400', 'No build version found');
     }
     if (isset($build->passed) && !$build->passed) {
-      api_response(sprintf(
+      ApiResponse::sendAndLog(sprintf(
         '[#%s] Build in wrong status (passed = false), not archiving it',
         $build_version
       ));
@@ -62,7 +62,7 @@ class AppVeyor {
       ) ||
       $project->repositoryName !== Config::ORG_NAME.'/'.Config::REPO_NAME
     ) {
-      api_response(sprintf(
+      ApiResponse::sendAndLog(sprintf(
         '[#%s] Not archiving; this build is not on the correct branch: %s/%s',
         $build->version ?? $build->buildVersion,
         $project->repositoryName,
@@ -70,7 +70,7 @@ class AppVeyor {
       ));
     }
     if (!empty($build->pullRequestId)) {
-      api_response(sprintf(
+      ApiResponse::sendAndLog(sprintf(
         '[#%s] Not archiving; this is a pull request (%s)',
         $build->version ?? $build->buildVersion,
         $build->pullRequestId

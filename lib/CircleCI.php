@@ -19,7 +19,7 @@ class CircleCI {
   public static function getAndValidateBuildFromPayload() {
     $payload = json_decode(file_get_contents('php://input'));
     if (empty($payload)) {
-      api_error('400', 'No payload provided');
+      ApiResponse::error('400', 'No payload provided');
     }
     return static::getAndValidateBuild($payload->payload);
   }
@@ -58,7 +58,7 @@ class CircleCI {
       $build->username !== Config::ORG_NAME ||
       $build->reponame !== Config::REPO_NAME
     ) {
-      api_response(sprintf(
+      ApiResponse::sendAndLog(sprintf(
         'Not archiving; this build is not on the correct branch: %s/%s/%s',
         $build->username,
         $build->reponame,
@@ -68,10 +68,10 @@ class CircleCI {
 
     $build_num = $build->build_num;
     if (empty($build_num)) {
-      api_error('400', 'No build number found');
+      ApiResponse::error('400', 'No build number found');
     }
     if ($build->status !== 'success' && $build->status !== 'fixed') {
-      api_response(sprintf(
+      ApiResponse::sendAndLog(sprintf(
         'Build #%s in wrong status (%s), not archiving it',
         $build_num,
         $build->status
