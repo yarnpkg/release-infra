@@ -41,6 +41,18 @@ class AppVeyor {
     return $verified_build;
   }
 
+  /**
+   * Gets the most recent build for the specified tag.
+   */
+  public static function getBuildForTag($tag) {
+    return static::call(
+      'projects/%s/%s/branch/%s',
+      Config::APPVEYOR_USERNAME,
+      Config::APPVEYOR_PROJECT_SLUG,
+      $tag
+    );
+  }
+
   public static function getArtifactsForJob($job_id) {
     $artifacts = static::call('buildjobs/%s/artifacts', $job_id);
     foreach ($artifacts as $artifact) {

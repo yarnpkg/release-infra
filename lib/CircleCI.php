@@ -36,14 +36,21 @@ class CircleCI {
 
     // Now, load this build from their API and revalidate it, to ensure it's
     // legit and the client isn't tricking us.
-    $verified_build = static::call(
+    $verified_build = static::getBuild($build->build_num);
+    static::validateBuild($verified_build);
+    return $verified_build;
+  }
+
+  /**
+   * Loads a CircleCI build by build number.
+   */
+  public static function getBuild($build_num) {
+    return static::call(
       'project/github/%s/%s/%s',
       Config::ORG_NAME,
       Config::REPO_NAME,
-      $build->build_num
+      $build_num
     );
-    static::validateBuild($verified_build);
-    return $verified_build;
   }
 
   /**
