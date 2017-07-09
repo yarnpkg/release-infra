@@ -14,10 +14,10 @@ if (empty($payload) || empty($payload->eventData)) {
 }
 $build = AppVeyor::getAndValidateBuild($payload->eventData);
 
-if (isset($payload->eventData->passed) && !$payload->eventData->passed) {
+if (isset($payload->passed) && !$payload->passed) {
   ApiResponse::sendAndLog(sprintf(
-    '[#%s] Build in wrong status (passed = false), not archiving it',
-    $build_version
+    '[#%s] Build in wrong status (passed = false), not releasing it',
+    $build->build->version
   ));
 }
 

@@ -60,8 +60,11 @@ foreach ($build->build->jobs as $current_job) {
 if ($job === null) {
   ApiResponse::error('400', 'Invalid job ID: '.$job_id);
 }
-if ($job->status !== 'success') {
-  ApiResponse::error('400', 'Build job is in incorrect status ('.$job->status.'). Expected "success".');
+if (isset($payload->passed) && !$payload->passed) {
+  ApiResponse::error('400', sprintf(
+    '[#%s] Build in wrong status (passed = false), not releasing it',
+    $build->build->version
+  ));
 }
 
 // Get artifacts for this job, and just download the first one
