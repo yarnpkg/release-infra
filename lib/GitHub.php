@@ -109,4 +109,12 @@ class GitHub {
       }
     );
   }
+
+  public static function createIssue($config) {
+    return static::post(
+      'repos/%s/%s/issues',
+      [Config::RELEASE_ORG_NAME, Config::RELEASE_REPO_NAME],
+      $config
+    );
+  }
 }

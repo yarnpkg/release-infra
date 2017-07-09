@@ -22,12 +22,6 @@ class AppVeyor {
     if (empty($build_version)) {
       ApiResponse::error('400', 'No build version found');
     }
-    if (isset($build->passed) && !$build->passed) {
-      ApiResponse::sendAndLog(sprintf(
-        '[#%s] Build in wrong status (passed = false), not archiving it',
-        $build_version
-      ));
-    }
 
     // Now, load this build from their API and revalidate it, to ensure it's legit
     // and the client isn't tricking us.

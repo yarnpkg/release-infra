@@ -25,17 +25,43 @@ if ($payload->environmentVariables->node_version === '4') {
 
 $build = AppVeyor::getAndValidateBuild($payload);
 
+ApiResponse::enableCreateGitHubIssueOnError(function ($message) use ($build) {
+  $release_host = str_replace('nightly', 'release', $_SERVER['HTTP_HOST']);
+  $body = <<<EOT
+An error was encountered while processing the AppVeyor release build of {$build->build->branch}:
+
+```
+{$message}
+```
+
+Re-running the build on AppVeyor might fix it. [Click "Re-build Commit" on this page to trigger a rebuild](https://ci.appveyor.com/project/kittens/yarn/build/{$build->build->buildNumber})
+
+Full logs: https://{$release_host}/log/release_appveyor
+
+cc @Daniel15 @{$build->build->committerUsername}
+EOT;
+  return [
+    'title' => 'Error releasing '.$build->build->branch,
+    'body' => $body,
+    'labels' => ['bug-high-priority', 'bug-distrib'],
+    'assignees' => [$build->build->committerUsername],
+  ];
+});
+
 // Ensure provided job ID is part of this build
 $job_id = $payload->jobId;
-$is_valid_job = false;
-foreach ($build->build->jobs as $job) {
-  if ($job->jobId === $job_id) {
-    $is_valid_job = true;
+$job = null;
+foreach ($build->build->jobs as $current_job) {
+  if ($current_job->jobId === $job_id) {
+    $job = $current_job;
     break;
   }
 }
-if (!$is_valid_job) {
+if ($job === null) {
   ApiResponse::error('400', 'Invalid job ID: '.$job_id);
+}
+if ($job->status !== 'success') {
+  ApiResponse::error('400', 'Build job is in incorrect status ('.$job->status.'). Expected "success".');
 }
 
 // Get artifacts for this job, and just download the first one

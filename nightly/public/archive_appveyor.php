@@ -14,6 +14,13 @@ if (empty($payload) || empty($payload->eventData)) {
 }
 $build = AppVeyor::getAndValidateBuild($payload->eventData);
 
+if (isset($payload->eventData->passed) && !$payload->eventData->passed) {
+  ApiResponse::sendAndLog(sprintf(
+    '[#%s] Build in wrong status (passed = false), not archiving it',
+    $build_version
+  ));
+}
+
 // Everything looks fine, grab the artifacts from AppVeyor's API. Don't trust
 // the artifacts POSTed to this webhook, just in case.
 // We have multiple builds with different Node.js versions, so just grabbing
