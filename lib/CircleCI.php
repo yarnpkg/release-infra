@@ -77,13 +77,6 @@ class CircleCI {
     if (empty($build_num)) {
       ApiResponse::error('400', 'No build number found');
     }
-    if ($build->status !== 'success' && $build->status !== 'fixed') {
-      ApiResponse::sendAndLog(sprintf(
-        'Build #%s in wrong status (%s), not archiving it',
-        $build_num,
-        $build->status
-      ));
-    }
   }
 
   public static function getArtifactsForBuild($build_num) {

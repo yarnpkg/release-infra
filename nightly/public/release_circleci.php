@@ -10,6 +10,30 @@ set_time_limit(100);
 use GuzzleHttp\Promise;
 
 $build = CircleCI::getAndValidateBuildFromPayload();
+
+ApiResponse::enableCreateGitHubIssueOnError(function ($message) use ($build) {
+  $release_host = str_replace('nightly', 'release', $_SERVER['HTTP_HOST']);
+  $body = <<<EOT
+An error was encountered while processing the CircleCI release build of {$build->vcs_tag}:
+
+```
+{$message}
+```
+
+Re-running the build on CircleCI might fix it. [Click "Rebuild" on this page to trigger a rebuild]({$build->build_url})
+
+Full logs: https://{$release_host}/log/release_circleci
+
+cc @Daniel15 @{$build->user->login}
+EOT;
+  return [
+    'title' => 'Error releasing '.$build->vcs_tag,
+    'body' => $body,
+    'labels' => ['bug-high-priority', 'bug-distrib'],
+    'assignees' => [$build->user->login],
+  ];
+});
+
 // Only publish tagged releases
 if (!preg_match(Config::RELEASE_TAG_FORMAT, $build->vcs_tag)) {
   ApiResponse::sendAndLog(sprintf(
@@ -17,6 +41,14 @@ if (!preg_match(Config::RELEASE_TAG_FORMAT, $build->vcs_tag)) {
     $build->build_num,
     $build->branch ?? '[none]',
     $build->vcs_tag ?? '[none]'
+  ));
+}
+
+if ($build->status !== 'success' && $build->status !== 'fixed') {
+  ApiResponse::error('400', sprintf(
+    'Build #%s in wrong status (%s), expected "success". Not releasing it.',
+    $build->build_num,
+    $build->status
   ));
 }
 

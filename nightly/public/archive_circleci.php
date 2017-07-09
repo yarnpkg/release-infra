@@ -13,5 +13,12 @@
 require(__DIR__.'/../bootstrap.php');
 
 $build = CircleCI::getAndValidateBuildFromPayload();
+if ($build->status !== 'success' && $build->status !== 'fixed') {
+  ApiResponse::sendAndLog(sprintf(
+    'Build #%s in wrong status (%s), not archiving it',
+    $build_num,
+    $build->status
+  ));
+}
 $urls = CircleCI::getArtifactsForBuild($build->build_num);
 ArtifactArchiver::archiveBuild($urls, $build->build_num);
