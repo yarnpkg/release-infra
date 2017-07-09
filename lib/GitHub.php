@@ -84,6 +84,29 @@ class GitHub {
         'Authorization' => 'token '.Config::GITHUB_TOKEN,
         'Content-Type' => 'application/octet-stream',
       ],
-    ]);
+    ])->then(
+      function($response) {
+        return true;
+      },
+      function($ex) {
+        try {
+          if (
+            $ex instanceof \GuzzleHttp\Exception\ClientException &&
+            $ex->hasResponse()
+          ) {
+            $response = json_decode((string)$ex->getResponse()->getBody());
+            if ($response->errors[0]->code === 'already_exists') {
+              // Asset already exists. This is okay, let's treat it as a
+              // non-critical issue.
+              return false;
+            }
+          }
+        } catch (Exception $inner_ex) {
+          // Error occurred while trying to determine the type of error. Just
+          // ignore it and let the generic "throw $ex" below handle it.
+        }
+        throw $ex;
+      }
+    );
   }
 }

@@ -59,10 +59,11 @@ $release = GitHub::getOrCreateRelease('v'.$version, $is_stable);
 
 // Upload the file to the release
 $signed_filename = str_replace('-unsigned', '', $filename);
-GitHub::uploadReleaseArtifact($release, $signed_filename, $signed_tempfile)->wait();
+$was_uploaded = GitHub::uploadReleaseArtifact($release, $signed_filename, $signed_tempfile)->wait();
+$output = $was_uploaded
+  ? 'Published '.$signed_filename.' to '.$version
+  : 'File '.$signed_filename.' already existed in '.$version.'!';
 
-$output =
-  'Published '.$signed_filename.' to '.$version."\n".
-  Release::performPostReleaseJobsIfReleaseIsComplete($version);
+$output .= "\n".Release::performPostReleaseJobsIfReleaseIsComplete($version);
 
 ApiResponse::sendAndLog($output);

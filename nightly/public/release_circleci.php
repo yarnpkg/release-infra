@@ -32,16 +32,32 @@ $output = '['.$build->build_num.'] Uploaded to '.$build->vcs_tag.":\n";
 $promises = [];
 foreach ($artifacts as $filename => $_) {
   $path = $tempdir.$filename;
-  $promises[] = GitHub::uploadReleaseArtifact($release, $filename, $path);
-  $output .= $filename."\n";
+  $promises[$filename] = GitHub::uploadReleaseArtifact($release, $filename, $path);
 
   // GPG sign all the files that need to be signed
   if (preg_match(Config::SIGN_FILE_TYPES, $filename)) {
     file_put_contents($path.'.asc', GPG::sign($path, Config::GPG_RELEASE));
-    $promises[] = GitHub::uploadReleaseArtifact($release, $filename.'.asc', $path.'.asc');
+    $promises[$filename.'.asc'] = GitHub::uploadReleaseArtifact($release, $filename.'.asc', $path.'.asc');
   }
 }
+
 $responses = Promise\unwrap($promises);
+
+$successful = '';
+$failed = '';
+foreach ($responses as $filename => $succeeded) {
+  if ($succeeded) {
+    $successful.= $filename."\n";
+  } else {
+    $failed .= $filename."\n";
+  }
+}
+if ($successful !== '') {
+  $output .= $successful;
+}
+if ($failed !== '') {
+  $output .= "\nAlready existed:\n".$failed;
+}
 
 $output .= "\n".Release::performPostReleaseJobsIfReleaseIsComplete($version);
 
