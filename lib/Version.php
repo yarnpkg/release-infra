@@ -13,6 +13,13 @@ class Version {
   }
 
   /**
+   * Gets the version number for the latest RC version of Yarn.
+   */
+  public static function getLatestRCYarnVersion(): string {
+    return trim(file_get_contents('https://yarnpkg.com/latest-rc-version'));
+  }
+
+  /**
    * Determines if two version numbers are the same minor version.
    */
   public static function isSameMinorVersion(string $a, string $b): bool {

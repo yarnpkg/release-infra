@@ -40,6 +40,8 @@ class Config {
   const JENKINS_VERSION_JOB = 'yarn-version';
   const JENKINS_VERSION_TOKEN = 'CHANGEME';
 
+  const NPM_TOKEN = 'CHANGEME';
+
   const ARTIFACT_PATH = __DIR__.'/../nightly/artifacts/';
   const LOG_PATH = __DIR__.'/../logs/';
   const DEBIAN_INCOMING_PATH = __DIR__.'/../nightly/deb-incoming/';

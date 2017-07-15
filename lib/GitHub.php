@@ -63,6 +63,14 @@ class GitHub {
     );
   }
 
+  public static function updateRelease(int $id, array $params) {
+    return static::post(
+      'repos/%s/%s/releases/%s',
+      [Config::RELEASE_ORG_NAME, Config::RELEASE_REPO_NAME, $id],
+      $params
+    );
+  }
+
   /**
    * Upload an artifact to the specific GitHub release. Returns a promise so
    * multiple files can be uploaded in parallel.
