@@ -28,6 +28,7 @@ class Config {
     'bestander',
     'daniel15',
     'kittens',
+    'byk',
   ];
 
   const CIRCLECI_TOKEN = 'CHANGEME';
