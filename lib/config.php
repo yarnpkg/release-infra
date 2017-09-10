@@ -47,7 +47,7 @@ class Config {
   const DEBIAN_INCOMING_PATH = __DIR__.'/../nightly/deb-incoming/';
 
   const GPG_NIGHTLY = 'FD2497F5';
-  const GPG_RELEASE = '9D41F3C3';
+  const GPG_RELEASE = 'E074D16EB6FF4DE3';
 
   const AUTHENTICODE_KEY = '/change/me.pfx';
   const AUTHENTICODE_PASS = '/change/me.key';
