@@ -12,7 +12,7 @@ class ArtifactArchiver {
   public static function downloadArtifacts(array $artifacts, string $dir) {
     // Download the artifacts in parallel
     $artifact_client = new Client();
-    $promises = [];
+    $requests = [];
     $file_handles = [];
     foreach ($artifacts as $filename => $url) {
       $file_handle = fopen($dir.$filename, 'w');
