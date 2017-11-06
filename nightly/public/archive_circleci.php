@@ -16,7 +16,7 @@ $build = CircleCI::getAndValidateBuildFromPayload();
 if ($build->status !== 'success' && $build->status !== 'fixed') {
   ApiResponse::sendAndLog(sprintf(
     'Build #%s in wrong status (%s), not archiving it',
-    $build_num,
+    $build->build_num,
     $build->status
   ));
 }
