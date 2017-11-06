@@ -21,4 +21,10 @@ if ($build->status !== 'success' && $build->status !== 'fixed') {
   ));
 }
 $urls = CircleCI::getArtifactsForBuild($build->build_num);
+if (count($urls) === 0) {
+  ApiResponse::sendAndLog(sprintf(
+    '[%s] Not publishing as release; it has no artifacts',
+    $build->build_num
+  ));
+}
 ArtifactArchiver::archiveBuild($urls, $build->build_num);

@@ -53,6 +53,12 @@ if ($build->status !== 'success' && $build->status !== 'fixed') {
 }
 
 $artifacts = CircleCI::getArtifactsForBuild($build->build_num);
+if (count($artifacts) === 0) {
+  ApiResponse::sendAndLog(sprintf(
+    '[%s] Not publishing as release; it has no artifacts',
+    $build->build_num
+  ));
+}
 $tempdir = Filesystem::createTempDir('yarn-release');
 ArtifactArchiver::downloadArtifacts($artifacts, $tempdir);
 
