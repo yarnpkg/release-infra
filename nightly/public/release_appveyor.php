@@ -71,11 +71,8 @@ if (isset($payload->passed) && !$payload->passed) {
 $urls = AppVeyor::getArtifactsForJob($job_id);
 $url = current($urls);
 $filename = key($urls);
-$tempfile = tempnam(sys_get_temp_dir(), 'yarn-artifact');
-$client = new Client();
-$client->get($url, ['sink' => $tempfile]);
 
-$signed_tempfile = Authenticode::sign($tempfile);
+$signed_tempfile = SecureSign::authenticodeSignFromURL($url);
 
 // Get version number from filename, and get the release with this version number
 preg_match('/yarn-(?P<version>.+?)(-unsigned)?\.msi/', $filename, $matches);

@@ -50,6 +50,8 @@ class Config {
   const GPG_NIGHTLY = 'FD2497F5';
   const GPG_RELEASE = 'E074D16EB6FF4DE3';
 
-  const AUTHENTICODE_KEY = '/change/me.pfx';
-  const AUTHENTICODE_PASS = '/change/me.key';
+  // URL to the SecureSign service for signing release files
+  //const SECURESIGN_URL = 'http://localhost:18498/';
+  const SECURESIGN_URL = 'https://codesigning.internal.d.sb/';
+  const SECURESIGN_ACCESS_TOKEN = 'CHANGEME';
 }
