@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+use Analog\Analog;
 
 abstract class ArtifactFileUtils {
   // Different package types have different naming standards, this regex
