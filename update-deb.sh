@@ -3,8 +3,8 @@
 #
 # To create repo:
 # aptly repo create -distribution=nightly -component=main -architectures=amd64,i386,all yarn-nightly
-# aptly publish repo -gpg-key=FD2497F5 -architectures=i386,amd64 yarn-nightly yarn-nightly
+# aptly publish repo -gpg-key=4F77679369475BAA -architectures=i386,amd64 yarn-nightly yarn-nightly
 
 set -ex
 aptly repo add -remove-files=true yarn-nightly ./nightly/deb-incoming/
-aptly publish update -gpg-key=FD2497F5 nightly yarn-nightly
+aptly publish update -gpg-key=4F77679369475BAA nightly yarn-nightly

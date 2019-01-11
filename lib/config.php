@@ -47,8 +47,8 @@ class Config {
   const LOG_PATH = __DIR__.'/../logs/';
   const DEBIAN_INCOMING_PATH = __DIR__.'/../nightly/deb-incoming/';
 
-  const GPG_NIGHTLY = 'FD2497F5';
-  const GPG_RELEASE = 'E074D16EB6FF4DE3';
+  const GPG_NIGHTLY = '4F77679369475BAA';
+  const GPG_RELEASE = '23E7166788B63E1E';
 
   // URL to the SecureSign service for signing release files
   //const SECURESIGN_URL = 'http://localhost:18498/';
