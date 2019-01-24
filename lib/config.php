@@ -54,4 +54,7 @@ class Config {
   //const SECURESIGN_URL = 'http://localhost:18498/';
   const SECURESIGN_URL = 'https://codesigning.internal.d.sb/';
   const SECURESIGN_ACCESS_TOKEN = 'CHANGEME';
+
+  // Auth token for /metrics API
+  const METRICS_AUTH_TOKEN = 'Bearer CHANGEME';
 }

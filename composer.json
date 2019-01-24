@@ -2,7 +2,8 @@
     "require": {
         "guzzlehttp/guzzle": "~6.0",
         "analog/analog": "^1.0",
-        "rize/uri-template": "^0.3.0"
+        "rize/uri-template": "^0.3.0",
+        "jimdo/prometheus_client_php": "^0.9.1"
     },
     "autoload": {
         "classmap": ["lib/", "views/"]
